@@ -1,0 +1,38 @@
+package users_service_imp
+import(
+	"chat-app/models"
+	"fmt"
+	"errors"
+	"golang.org/x/crypto/bcrypt"
+	"log"
+	"chat-app/utils"
+
+)
+
+func (a *AuthUsers_Imp) Login(login *models.Login) (string, error) {
+
+	
+	Resp, err := a.users.Login(login)
+	if err != nil {
+		fmt.Println("Error logging in user:", err)
+		return "", errors.New("Invalid email or password")
+	}
+
+	userPass := []byte(Resp.Password)
+	loginPass := []byte(login.Password)
+	passErr := bcrypt.CompareHashAndPassword(userPass, loginPass)
+	if passErr != nil {
+		fmt.Println("Error in password", passErr)
+		log.Println(passErr)
+		return "", passErr
+	}
+
+	token, err := utils.GenerateToken(Resp.Email, Resp.ID)
+	if err != nil {
+		return "", err
+	}
+
+	return token, nil
+}
+
+
