@@ -27,7 +27,7 @@ func (a *AuthUsers_Imp) Login(login *models.Login) (string, error) {
 		return "", passErr
 	}
 
-	token, err := utils.GenerateToken(Resp.Email, Resp.ID)
+	token, err := utils.GenerateToken(Resp.Email, Resp.Users_ID)
 	if err != nil {
 		return "", err
 	}

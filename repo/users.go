@@ -54,7 +54,7 @@ func (u *Users)Login(login *models.Login) (*models.Users, error) {
 	var Resp models.Users
 
 	err := row.Scan(
-		&Resp.ID,
+		&Resp.Users_ID,
 		&Resp.Name,
 		&Resp.Email,
 		&Resp.Password,
