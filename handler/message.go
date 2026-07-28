@@ -2,8 +2,6 @@ package handler
 
 import (
 	"fmt"
-	"net/http"
-	"strconv"
 	"chat-app/models"
 	"github.com/gin-gonic/gin"
 )
@@ -19,12 +17,12 @@ func (a *AuthHandler) HandleSaveMessage(c *gin.Context) {
 	}
 
 	// Get sender ID from JWT
-	senderID := c.GetInt("userID")
-	fmt.Println("Sender ID:", senderID)
-	message.SenderID = senderID
+	receiverID := c.GetInt("userID")
+	fmt.Println("Receiver ID:", receiverID)
+	message.ReceiverID = receiverID
 
 	// New messages are always unread
-	message.IsRead = false
+	// message.IsRead = false
 
 	if err := a.MessageService.SaveMessage(&message); err != nil {
 		c.JSON(500, gin.H{
@@ -39,6 +37,7 @@ func (a *AuthHandler) HandleSaveMessage(c *gin.Context) {
 }
 
 func (a *AuthHandler) GetMessages(c *gin.Context) {
+<<<<<<< HEAD
 	senderID := c.GetInt("user_id") // Logged-in user
 
 	otherUserID, err := strconv.Atoi(c.Param("user_id"))
@@ -48,10 +47,34 @@ func (a *AuthHandler) GetMessages(c *gin.Context) {
 	}
 
 	messages, err := a.MessageService.GetReceivedMessages(senderID, otherUserID)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+=======
+
+	senderID := c.GetInt("userID")
+
+	var req struct {
+		ReceiverID int `json:"receiver_id"`
+	}
+
+	if err := c.ShouldBindJSON(&req); err != nil {
+
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"messages": messages})
+	messages, err := a.MessageService.GetMessages(senderID, req.ReceiverID)
+
+>>>>>>> 1ca2fb4 (Refactor message handling: update message retrieval logic and modify routes; remove unused user handler)
+	if err != nil {
+
+		c.JSON(500, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"messages": messages,
+	})
 }

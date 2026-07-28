@@ -23,15 +23,25 @@ func (m *MessageRepository) SaveMessage(message *models.Messages) error {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 func (m *MessageRepository) GetReceivedMessages(senderID, receiverID int) ([]models.Messages, error) {
 =======
 func (m *MessageRepository) GetReceivedMessages(receiverID int) ([]models.Messages, error) {
 >>>>>>> b8f810e (Implement messaging functionality with database integration; add message handling and repository layers)
+=======
+func (m *MessageRepository) GetMessages(senderID, receiverID int) ([]models.Messages, error) {
+>>>>>>> 1ca2fb4 (Refactor message handling: update message retrieval logic and modify routes; remove unused user handler)
 
-	
 	rows, err := m.db.Query(`
-		SELECT id, sender_id, receiver_id, message, is_read, created_at
+		SELECT
+			id,
+			sender_id,
+			receiver_id,
+			message,
+			is_read,
+			created_at
 		FROM messages
+<<<<<<< HEAD
 <<<<<<< HEAD
 		WHERE (sender_id = $1 AND receiver_id = $2)
 		   OR (sender_id = $2 AND receiver_id = $1)
@@ -42,15 +52,24 @@ func (m *MessageRepository) GetReceivedMessages(receiverID int) ([]models.Messag
 		ORDER BY created_at ASC
 	`, receiverID)
 >>>>>>> b8f810e (Implement messaging functionality with database integration; add message handling and repository layers)
+=======
+		WHERE
+			(sender_id=$1 AND receiver_id=$2)
+		OR
+			(sender_id=$2 AND receiver_id=$1)
+	`, senderID, receiverID)
+>>>>>>> 1ca2fb4 (Refactor message handling: update message retrieval logic and modify routes; remove unused user handler)
 
 	if err != nil {
 		return nil, err
 	}
+
 	defer rows.Close()
 
 	var messages []models.Messages
 
 	for rows.Next() {
+
 		var msg models.Messages
 
 		err := rows.Scan(
@@ -61,12 +80,14 @@ func (m *MessageRepository) GetReceivedMessages(receiverID int) ([]models.Messag
 			&msg.IsRead,
 			&msg.CreatedAt,
 		)
+
 		if err != nil {
 			return nil, err
 		}
 
 		messages = append(messages, msg)
 	}
+
 	// Check for errors encountered during iteration
 	if err := rows.Err(); err != nil {
 		return nil, err

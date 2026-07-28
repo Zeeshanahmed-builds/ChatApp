@@ -31,7 +31,7 @@ func SetupRoutes( r *gin.Engine, dbConn *sql.DB) {
         authUsers,
         messageService,
     )
-	r.GET("/messages/:user_id", middleware.AuthMiddleware(), authHandler.GetMessages)
+	r.POST("/message/history", middleware.AuthMiddleware(), authHandler.GetMessages)
 	r.POST("/message",middleware.AuthMiddleware(), authHandler.HandleSaveMessage)
 	r.POST("/signup", authHandler.SignUp)
 	r.POST("/login",authHandler.Login)
