@@ -37,17 +37,6 @@ func (a *AuthHandler) HandleSaveMessage(c *gin.Context) {
 }
 
 func (a *AuthHandler) GetMessages(c *gin.Context) {
-<<<<<<< HEAD
-	senderID := c.GetInt("user_id") // Logged-in user
-
-	otherUserID, err := strconv.Atoi(c.Param("user_id"))
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user id"})
-		return
-	}
-
-	messages, err := a.MessageService.GetReceivedMessages(senderID, otherUserID)
-=======
 
 	senderID := c.GetInt("userID")
 
@@ -65,7 +54,6 @@ func (a *AuthHandler) GetMessages(c *gin.Context) {
 
 	messages, err := a.MessageService.GetMessages(senderID, req.ReceiverID)
 
->>>>>>> 1ca2fb4 (Refactor message handling: update message retrieval logic and modify routes; remove unused user handler)
 	if err != nil {
 
 		c.JSON(500, gin.H{
