@@ -11,8 +11,13 @@ func (m *MessageServiceImp) SaveMessage(message *models.Messages) error {
 	return nil
 }
 
+<<<<<<< HEAD
 func (m *MessageServiceImp) GetReceivedMessages(senderID, receiverID int) ([]models.Messages, error) {
 	messages, err := m.messageRepo.GetReceivedMessages(senderID, receiverID)
+=======
+func (m *MessageServiceImp) GetReceivedMessages(receiverID int) ([]models.Messages, error) {
+	messages, err := m.messageRepo.GetReceivedMessages(receiverID)
+>>>>>>> b8f810e (Implement messaging functionality with database integration; add message handling and repository layers)
 	if err != nil {
 		return nil, err
 	}

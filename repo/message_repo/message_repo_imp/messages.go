@@ -22,16 +22,26 @@ func (m *MessageRepository) SaveMessage(message *models.Messages) error {
 }
 
 
+<<<<<<< HEAD
 func (m *MessageRepository) GetReceivedMessages(senderID, receiverID int) ([]models.Messages, error) {
+=======
+func (m *MessageRepository) GetReceivedMessages(receiverID int) ([]models.Messages, error) {
+>>>>>>> b8f810e (Implement messaging functionality with database integration; add message handling and repository layers)
 
 	
 	rows, err := m.db.Query(`
 		SELECT id, sender_id, receiver_id, message, is_read, created_at
 		FROM messages
+<<<<<<< HEAD
 		WHERE (sender_id = $1 AND receiver_id = $2)
 		   OR (sender_id = $2 AND receiver_id = $1)
 		ORDER BY created_at ASC
 	`, senderID, receiverID)
+=======
+		WHERE (receiver_id = $1)
+		ORDER BY created_at ASC
+	`, receiverID)
+>>>>>>> b8f810e (Implement messaging functionality with database integration; add message handling and repository layers)
 
 	if err != nil {
 		return nil, err
