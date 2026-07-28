@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"chat-app/db"
 	"chat-app/routes"
 	"github.com/gin-gonic/gin"
@@ -8,11 +9,14 @@ import (
 
 func main() {
 
-	DB := db.ConnectDB()
-	defer DB.Close()
+	dbConn, err := db.ConnectDB()
+if err != nil {
+	log.Fatal(err)
+}
+defer dbConn.Close()
 
 	router := gin.Default()
-	routes.SetupRoutes(router)
+	routes.SetupRoutes(router,dbConn)
 	router.Run("localhost:8080")
 
 }

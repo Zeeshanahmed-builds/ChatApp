@@ -1,13 +1,13 @@
 package users_service_imp
 
 import (
-	"chat-app/repo"
+	"chat-app/repo/users_repo"
 	"chat-app/service/users_service"
 	
 )
 
 type AuthUsers_Imp struct{
-	users		repo.Users
+	users		users_repo.UsersRepo
 }
 
 
@@ -18,5 +18,5 @@ func NewAuthUsers(input NewAuthUsersImp)users_service.AuthUsers{
 }
 
 type NewAuthUsersImp struct{
-	Users  repo.Users
+	Users  users_repo.UsersRepo
 }

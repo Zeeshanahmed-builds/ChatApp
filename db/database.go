@@ -8,13 +8,13 @@ import (
 	_ "github.com/lib/pq"
 )
 
-var DB *sql.DB
 
-func ConnectDB() *sql.DB {
+
+func ConnectDB() (*sql.DB, error) {
 
 	err := godotenv.Load()
 	if err != nil {
-		panic("Error loading .env file")
+		return nil, fmt.Errorf("error loading .env file: %v", err)
 	}
 
 	// var err error
@@ -30,22 +30,22 @@ func ConnectDB() *sql.DB {
 		Host, Port, User, Password, DBName,
 	)
 
-	DB, err = sql.Open(
+	DB, err := sql.Open(
 
 		"postgres",dsn)
 
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error opening database: %v", err)
 	}
 
 	err = DB.Ping()
 
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error pinging database: %v", err)
 	}
 
 	fmt.Println("Connected to PostgreSQL!")
 
-	return DB
+	return DB, nil
 
 }

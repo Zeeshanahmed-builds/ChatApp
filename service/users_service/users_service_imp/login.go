@@ -1,17 +1,17 @@
 package users_service_imp
-import(
-	"chat-app/models"
-	"fmt"
-	"errors"
-	"golang.org/x/crypto/bcrypt"
-	"log"
-	"chat-app/utils"
 
+import (
+	"chat-app/models"
+	"chat-app/utils"
+	"errors"
+	"fmt"
+	"log"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (a *AuthUsers_Imp) Login(login *models.Login) (string, error) {
 
-	
 	Resp, err := a.users.Login(login)
 	if err != nil {
 		fmt.Println("Error logging in user:", err)
@@ -34,5 +34,3 @@ func (a *AuthUsers_Imp) Login(login *models.Login) (string, error) {
 
 	return token, nil
 }
-
-

@@ -1,8 +1,8 @@
-package middlewre
+package middleware
 
 import (
-	"fmt"
 	"chat-app/utils"
+	"fmt"
 	"strings"
 
 	"github.com/gin-gonic/gin"
