@@ -17,9 +17,9 @@ func (a *AuthHandler) HandleSaveMessage(c *gin.Context) {
 	}
 
 	// Get sender ID from JWT
-	receiverID := c.GetInt("userID")
-	fmt.Println("Receiver ID:", receiverID)
-	message.ReceiverID = receiverID
+	senderID := c.GetInt("userID")
+	fmt.Println("Receiver ID:", senderID)
+	message.SenderID = senderID
 
 	// New messages are always unread
 	// message.IsRead = false

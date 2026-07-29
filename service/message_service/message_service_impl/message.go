@@ -1,5 +1,6 @@
 package message_service_imp
 import(
+	"fmt"
 	"chat-app/models"
 )
 
@@ -8,8 +9,21 @@ func (m *MessageServiceImp) SaveMessage(message *models.Messages) error {
 	if err != nil {
 		return err
 	}
-	return nil
+
+	
+	topic := fmt.Sprintf("chat/%d/inbox", message.ReceiverID)
+
+	token := m.mqttClient.Publish(
+		topic,
+		1,     
+		false,
+		message.Message,
+	)
+
+    token.Wait()
+    return token.Error()
 }
+
 
 func (m *MessageServiceImp) GetMessages(senderID, receiverID int) ([]models.Messages, error) {
 	messages, err := m.messageRepo.GetMessages(senderID, receiverID)

@@ -4,15 +4,15 @@ import (
 	"database/sql"
 	"chat-app/handler"
 	"chat-app/middleware"
-	"chat-app/repo/message_repo/message_repo_imp"
+	"chat-app/repo/message_repo/message_repo_impl"
 	"chat-app/repo/users_repo/users_repo_imp"
-	"chat-app/service/message_service/message_service_imp"
-	"chat-app/service/users_service/users_service_imp"
-
+	"chat-app/service/message_service/message_service_impl"
+	"chat-app/service/users_service/users_service_impl"
+	paho "github.com/eclipse/paho.mqtt.golang"
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes( r *gin.Engine, dbConn *sql.DB) {
+func SetupRoutes( r *gin.Engine, dbConn *sql.DB, mqttClient paho.Client) {
 
 	userRepo := users_repo_imp.NewUsers(dbConn)
 	messageRepo := message_repo_imp.NewMessageRepo(dbConn)
@@ -20,6 +20,7 @@ func SetupRoutes( r *gin.Engine, dbConn *sql.DB) {
 	messageService := message_service_imp.NewMessageService(
     message_service_imp.NewMessageServiceImp{
         MessageRepo: messageRepo,
+		MQTTClient:  mqttClient,
     },
 )
 

@@ -67,7 +67,6 @@ func (m *MessageRepository) GetMessages(senderID, receiverID int) ([]models.Mess
 		messages = append(messages, msg)
 	}
 
-	// Check for errors encountered during iteration
 	if err := rows.Err(); err != nil {
 		return nil, err
 	}
