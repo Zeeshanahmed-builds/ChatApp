@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"database/sql"
+	"gorm.io/gorm"
 	"chat-app/handler"
 	"chat-app/middleware"
 	"chat-app/repo/message_repo/message_repo_impl"
@@ -12,7 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes( r *gin.Engine, dbConn *sql.DB, mqttClient paho.Client) {
+func SetupRoutes( r *gin.Engine, dbConn *gorm.DB, mqttClient paho.Client) {
 
 	userRepo := users_repo_imp.NewUsers(dbConn)
 	messageRepo := message_repo_imp.NewMessageRepo(dbConn)

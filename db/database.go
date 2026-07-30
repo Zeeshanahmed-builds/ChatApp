@@ -1,51 +1,57 @@
 package db
 
 import (
-	"database/sql"
 	"fmt"
+	"log"
 	"os"
+
+	"chat-app/models"
+
 	"github.com/joho/godotenv"
-	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
+func Connect() (*gorm.DB, error) {
 
-
-func ConnectDB() (*sql.DB, error) {
-
-	err := godotenv.Load()
-	if err != nil {
+	// Load .env
+	if err := godotenv.Load(); err != nil {
 		return nil, fmt.Errorf("error loading .env file: %v", err)
 	}
 
-	// var err error
+	// Read environment variables
+	host := os.Getenv("DB_HOST")
+	port := os.Getenv("DB_PORT")
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	dbName := os.Getenv("DB_NAME")
 
-	Host := os.Getenv("DB_HOST")
-	Port := os.Getenv("DB_PORT")
-	User := os.Getenv("DB_USER")
-	Password := os.Getenv("DB_PASSWORD")
-	DBName := os.Getenv("DB_NAME")
-
+	// Build DSN
 	dsn := fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		Host, Port, User, Password, DBName,
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable TimeZone=Asia/Karachi",
+		host,
+		port,
+		user,
+		password,
+		dbName,
 	)
 
-	DB, err := sql.Open(
-
-		"postgres",dsn)
-
+	// Connect
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		return nil, fmt.Errorf("error opening database: %v", err)
+		return nil, fmt.Errorf("failed to connect database: %v", err)
 	}
 
-	err = DB.Ping()
-
+	// Auto migrate
+	err = db.AutoMigrate(
+		&models.User{},
+		&models.Message{},
+	)
 	if err != nil {
-		return nil, fmt.Errorf("error pinging database: %v", err)
+		return nil, fmt.Errorf("auto migration failed: %v", err)
 	}
 
-	fmt.Println("Connected to PostgreSQL!")
+	log.Println("Database connected successfully!")
 
-	return DB, nil
-
+	return db, nil
 }

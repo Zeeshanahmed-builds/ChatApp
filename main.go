@@ -12,11 +12,10 @@ import (
 
 func main() {
 
-	dbConn, err := db.ConnectDB()
+	db, err := db.Connect()
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer dbConn.Close()
 
 	mqttClient, err := mqtt.Connect()
 	if err != nil {
@@ -29,7 +28,9 @@ func main() {
 	}
 
 	router := gin.Default()
-	routes.SetupRoutes(router, dbConn, mqttClient)
-	router.Run("localhost:8080")
-
+	routes.SetupRoutes(router, db, mqttClient)
+	err = router.Run("localhost:8080")
+	if err != nil {
+	log.Fatal(err)
+	}
 }

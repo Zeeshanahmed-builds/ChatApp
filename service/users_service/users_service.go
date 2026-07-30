@@ -5,5 +5,5 @@ import(
 
 type AuthUsers interface{
 	Login(login *models.Login) (string, error)
-	SignUp(users *models.Users) error
+	SignUp(users *models.User) error
 }

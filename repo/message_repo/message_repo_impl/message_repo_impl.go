@@ -2,14 +2,17 @@ package message_repo_imp
 
 import (
 	"chat-app/repo/message_repo"
-	"database/sql"
+	"gorm.io/gorm"
+
 )
 
 type MessageRepository struct {
-	db *sql.DB
+	// db *sql.DB
+	db *gorm.DB
+
 }
 
-func NewMessageRepo(db *sql.DB) message_repo.MessageRepo {
+func NewMessageRepo(db *gorm.DB) message_repo.MessageRepo {
 	return &MessageRepository{db: db}
 }
 

@@ -3,9 +3,10 @@ import (
 	"fmt"
 	"errors"
 	"chat-app/models"
+	
 )
 
-func (a *AuthUsers_Imp) SignUp(users *models.Users) error {
+func (a *AuthUsers_Imp) SignUp(users *models.User) error {
 	
 	 err:=a.users.SignUp(users)
 

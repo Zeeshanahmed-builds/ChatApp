@@ -9,7 +9,7 @@ import (
 )
 
 func (a AuthHandler) SignUp(c *gin.Context) {
-	var users *models.Users
+	var users *models.User
 	if err := c.ShouldBindJSON(&users); err != nil {
 		c.JSON(400, gin.H{"error": "Invalid request body"})
 		return

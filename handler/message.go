@@ -1,13 +1,13 @@
 package handler
 
 import (
-	"fmt"
 	"chat-app/models"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 func (a *AuthHandler) HandleSaveMessage(c *gin.Context) {
 
-	var message models.Messages
+	var message models.Message
 
 	if err := c.ShouldBindJSON(&message); err != nil {
 		c.JSON(400, gin.H{
@@ -19,7 +19,7 @@ func (a *AuthHandler) HandleSaveMessage(c *gin.Context) {
 	// Get sender ID from JWT
 	senderID := c.GetInt("userID")
 	fmt.Println("Receiver ID:", senderID)
-	message.SenderID = senderID
+	message.SenderID = uint(senderID)
 
 	// New messages are always unread
 	// message.IsRead = false

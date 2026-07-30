@@ -12,13 +12,13 @@ import (
 
 func (a *AuthUsers_Imp) Login(login *models.Login) (string, error) {
 
-	Resp, err := a.users.Login(login)
+	user, err := a.users.Login(login.Email)
 	if err != nil {
 		fmt.Println("Error logging in user:", err)
 		return "", errors.New("Invalid email or password")
 	}
 
-	userPass := []byte(Resp.Password)
+	userPass := []byte(user.Password)
 	loginPass := []byte(login.Password)
 	passErr := bcrypt.CompareHashAndPassword(userPass, loginPass)
 	if passErr != nil {
@@ -27,7 +27,7 @@ func (a *AuthUsers_Imp) Login(login *models.Login) (string, error) {
 		return "", passErr
 	}
 
-	token, err := utils.GenerateToken(Resp.Email, Resp.Users_ID)
+	token, err := utils.GenerateToken(user.Email, int(user.ID))
 	if err != nil {
 		return "", err
 	}

@@ -5,7 +5,7 @@ import(
 
 
 type MessageService interface {
-	SaveMessage(message *models.Messages) error
-	GetMessages(senderID, receiverID int) ([]models.Messages, error)
+	SaveMessage(message *models.Message) error
+	GetMessages(senderID, receiverID int) ([]models.Message, error)
 
 }
