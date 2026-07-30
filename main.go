@@ -31,6 +31,6 @@ func main() {
 	routes.SetupRoutes(router, db, mqttClient)
 	err = router.Run("localhost:8080")
 	if err != nil {
-	log.Fatal(err)
+		log.Fatal(err)
 	}
 }

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 )
+
 func (a *AuthHandler) HandleSaveMessage(c *gin.Context) {
 
 	var message models.Message

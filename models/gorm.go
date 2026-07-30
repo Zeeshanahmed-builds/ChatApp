@@ -4,18 +4,16 @@ import (
 	"gorm.io/gorm"
 )
 
-
-type User struct {	
-	gorm.Model 
+type User struct {
+	gorm.Model
 
 	Name     string `json:"name" gorm:"not null"`
 	Email    string `json:"email" gorm:"unique;not null"`
 	Password string `json:"password" gorm:"not null"`
 }
 
-
 type Message struct {
-	gorm.Model 
+	gorm.Model
 
 	SenderID   uint   `json:"sender_id" gorm:"not null"`
 	ReceiverID uint   `json:"receiver_id" gorm:"not null"`

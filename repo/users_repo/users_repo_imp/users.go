@@ -2,9 +2,8 @@ package users_repo_imp
 
 import (
 	"chat-app/models"
-	"log"
 	"golang.org/x/crypto/bcrypt"
-
+	"log"
 )
 
 func (u *Users) SignUp(user *models.User) error {
@@ -19,14 +18,14 @@ func (u *Users) SignUp(user *models.User) error {
 
 	user.Password = string(hashPassword)
 
-	 err = u.db.Create(user).Error; 
-	 if err != nil {
+	err = u.db.Create(user).Error
+	if err != nil {
 		return err
 	}
 	log.Println("User signed up successfully:", user.Name)
 	return nil
 
-}	
+}
 
 func (u *Users) Login(email string) (*models.User, error) {
 	var user models.User
@@ -37,7 +36,6 @@ func (u *Users) Login(email string) (*models.User, error) {
 	if err != nil {
 		return nil, err
 	}
-
 
 	return &user, err
 }

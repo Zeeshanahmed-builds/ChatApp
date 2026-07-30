@@ -1,8 +1,10 @@
 package models
+
 import "time"
+
 type Users struct {
-	Users_ID       int    `json:"id"`
-	Name     string `json:"name"`	
+	Users_ID int    `json:"id"`
+	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
