@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: backend-config
+  namespace: chat-app
+
+data:
+  DB_HOST: postgres
+  DB_PORT: "5432"
+  DB_NAME: chatapp
+  DB_USER: postgres
+
+  MQTT_BROKER: tcp://emqx:1883

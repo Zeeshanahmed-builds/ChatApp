@@ -14,9 +14,9 @@ import (
 
 func Connect() (*gorm.DB, error) {
 
-	// Load .env
+	// Load .env (optional - will use environment variables if not found)
 	if err := godotenv.Load(); err != nil {
-		return nil, fmt.Errorf("error loading .env file: %v", err)
+		log.Println(".env file not found, using environment variables from ConfigMap/Secret")
 	}
 
 	// Read environment variables
@@ -28,7 +28,7 @@ func Connect() (*gorm.DB, error) {
 
 	// Build DSN
 	dsn := fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable TimeZone=Asia/Karachi",
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable TimeZone=UTC",
 		host,
 		port,
 		user,
