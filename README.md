@@ -464,6 +464,8 @@ Add to `/etc/hosts`:
 
 Example:
 
+
+.
 ```bash
 192.168.49.2 chatapp.local
 ```
