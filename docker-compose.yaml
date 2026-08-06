@@ -21,7 +21,7 @@ services:
     networks:
       - chatapp-network
     restart: unless-stopped
-
+    
   postgres:
     image: postgres:15-alpine
     container_name: chatapp-postgres

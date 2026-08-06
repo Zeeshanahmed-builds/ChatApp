@@ -372,3 +372,116 @@ go run main.go
 # License
 
 This project is intended for educational and learning purposes.
+
+# Kubernetes Deployment
+
+## Start Minikube
+
+```bash
+minikube start
+```
+
+## Enable Ingress
+
+```bash
+minikube addons enable ingress
+```
+
+## Build Docker Image inside Minikube
+
+```bash
+eval $(minikube docker-env)
+docker build -t backend-app:v1 .
+```
+
+## Deploy Resources
+
+```bash
+kubectl apply -f k8s/
+```
+
+## Verify Namespace
+
+```bash
+kubectl get ns
+```
+
+## Verify Pods
+
+```bash
+kubectl get pods -n chat-app
+```
+
+## Verify Services
+
+```bash
+kubectl get svc -n chat-app
+```
+
+## Verify Deployments
+
+```bash
+kubectl get deployments -n chat-app
+```
+
+## Verify Ingress
+
+```bash
+kubectl get ingress -n chat-app
+```
+
+## View Logs
+
+```bash
+kubectl logs deployment/backend -n chat-app
+```
+
+## Port Forward (Optional)
+
+```bash
+kubectl port-forward service/backend-service 8080:80 -n chat-app
+```
+
+Then open:
+
+```
+http://localhost:8080
+```
+
+## Access Using Ingress
+
+Get Minikube IP:
+
+```bash
+minikube ip
+```
+
+Add to `/etc/hosts`:
+
+```bash
+<MINIKUBE_IP> chatapp.local
+```
+
+Example:
+
+```bash
+192.168.49.2 chatapp.local
+```
+
+Open:
+
+```
+http://chatapp.local
+```
+
+## Delete Deployment
+
+```bash
+kubectl delete -f k8s/
+```
+
+## Stop Minikube
+
+```bash
+minikube stop
+```
