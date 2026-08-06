@@ -12,7 +12,7 @@ migrate-force:
 	migrate -path $(MIGRATION_DIR) -database "$(DB_URL)" force 1
 
 run:
-	go fmt ./..
+	go fmt ./...
 	golangci-lint run ./...
 	go run main.go
 	
