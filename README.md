@@ -531,9 +531,3 @@ zeeshan1678/chat-app:latest
 ```
 
 ---
-
-# Author
-
-**Zeeshan Ahmed**
-
-Backend Developer | Go | PostgreSQL | Docker | Kubernetes
