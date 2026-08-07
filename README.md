@@ -1,26 +1,28 @@
 # Chat Application Backend
 
-A real-time chat application backend built with **Go (Golang)**, **Gin**, **GORM**, **PostgreSQL**, and **EMQX MQTT**. The project supports user authentication, private messaging, group chats, and message history.
+A scalable real-time chat application backend built with **Go (Golang)** using the **Gin Framework**, **PostgreSQL**, **MQTT (EMQX)**, **Docker**, **Kubernetes**, and **GitHub Actions CI/CD**.
 
 ---
 
-## Features
+# Features
 
 - User Registration
-- User Login with JWT Authentication
-- Protected API Routes
-- Private One-to-One Messaging
-- Group Creation
-- Add/Remove Group Members
-- Group Messaging
-- Message History
-- MQTT Integration using EMQX
+- User Login
+- JWT Authentication
+- Protected APIs
+- User Management
+- Private Messaging
+- Message Persistence
+- MQTT Real-time Communication
 - PostgreSQL Database
-- Repository-Service-Handler Architecture
+- Database Migrations
+- Docker Support
+- Kubernetes Deployment
+- GitHub Actions CI/CD
 
 ---
 
-## Tech Stack
+# Technology Stack
 
 | Technology | Purpose |
 |------------|---------|
@@ -30,175 +32,443 @@ A real-time chat application backend built with **Go (Golang)**, **Gin**, **GORM
 | GORM | ORM |
 | MQTT (EMQX) | Real-time Messaging |
 | JWT | Authentication |
+| Docker | Containerization |
+| Kubernetes | Container Orchestration |
+| GitHub Actions | CI/CD |
 
 ---
 
-## Project Structure
+# Project Structure
 
 ```
-Backend/
+.
+├── db
+│   ├── database.go
+│   └── migrations
 │
-├── db/
-│   ├── migrations/
-│   └── db.go
+├── handler
+│   ├── auth.go
+│   ├── message.go
+│   └── users.go
 │
-├── handler/
+├── middleware
+│   └── auth.go
 │
-├── middleware/
+├── models
+│   ├── gorm.go
+│   └── request.go
 │
-├── models/
+├── mqtt
+│   ├── mqtt.go
+│   └── subscribe.go
 │
-├── mqtt/
+├── repo
+│   ├── message_repo
+│   └── users_repo
 │
-├── repo/
-│   ├── users_repo/
-│   ├── message_repo/
-│   └── group_repo/
+├── routes
 │
-├── routes/
+├── service
+│   ├── message_service
+│   └── users_service
 │
-├── service/
-│   ├── users_service/
-│   ├── message_service/
-│   └── group_service/
+├── utils
 │
-├── utils/
+├── k8s
 │
+├── Dockerfile
+├── docker-compose.yaml
 ├── main.go
-├── go.mod
-└── .env
+└── README.md
 ```
 
 ---
 
-# Architecture
+# Folder Explanation
+
+## db
+
+Contains database configuration and SQL migration files.
 
 ```
-Client
-   │
-   ▼
-Routes
-   │
-   ▼
-Handlers
-   │
-   ▼
-Services
-   │
-   ▼
-Repositories
-   │
-   ▼
-PostgreSQL
+db/
 ```
 
-Real-time messages are published through **EMQX MQTT**.
+Responsible for
+
+- PostgreSQL Connection
+- Database Initialization
+- SQL Migrations
 
 ---
 
-# Installation
+## handler
 
-## 1. Clone Repository
+Contains HTTP handlers.
 
-```bash
-git clone <repository-url>
+Responsibilities:
 
-cd Backend
-```
-
----
-
-## 2. Install Dependencies
-
-```bash
-go mod tidy
-```
-
----
-
-## 3. Create Environment File
-
-Create a `.env` file.
+- Handle Requests
+- Validate Request
+- Call Services
+- Return Response
 
 Example:
 
-```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=your_password
-DB_NAME=chatapp
+```
+POST /signup
 
-JWT_SECRET=your_secret_key
+↓
 
-MQTT_BROKER=tcp://localhost:1883
-MQTT_CLIENT_ID=chat-backend
+handler/auth.go
+
+↓
+
+User Service
+
+↓
+
+Repository
+
+↓
+
+Database
 ```
 
 ---
 
-## 4. Run PostgreSQL
+## middleware
 
-Make sure PostgreSQL is running and create the database.
+Contains middleware.
 
-Example:
+Current middleware:
 
-```sql
-CREATE DATABASE chatapp;
+- JWT Authentication
+
+Responsibilities:
+
+- Verify Token
+- Protect Routes
+- Extract User ID
+
+---
+
+## models
+
+Contains application models.
+
+Includes
+
+- Database Models
+- Request Models
+- Response Models
+
+---
+
+## mqtt
+
+Contains MQTT configuration.
+
+Responsible for
+
+- MQTT Connection
+- Publisher
+- Subscriber
+
+Uses EMQX Broker.
+
+---
+
+## repo
+
+Repository Layer.
+
+Responsible for
+
+- Database Queries
+- CRUD Operations
+- SQL/GORM Logic
+
+Repositories:
+
+- Users Repository
+- Message Repository
+
+---
+
+## service
+
+Business Logic Layer.
+
+Responsible for
+
+- Authentication Logic
+- User Logic
+- Message Logic
+
+This layer communicates between Handlers and Repositories.
+
+---
+
+## routes
+
+Contains all API routes.
+
+Responsible for
+
+- Registering APIs
+- Applying Middleware
+
+---
+
+## utils
+
+Utility functions.
+
+Examples:
+
+- Generate JWT
+- Verify JWT
+
+---
+
+# Kubernetes Structure
+
+```
+k8s
+│
+├── api
+│
+├── postgres
+│
+├── emqx
+│
+├── ingress.yaml
+│
+├── namespace.yaml
+│
+└── secret.yaml
 ```
 
 ---
 
-## 5. Run Database Migrations
+## namespace.yaml
 
-Run all migrations inside:
+Creates the Kubernetes namespace.
 
 ```
-db/migrations/
+chat-app
 ```
 
 ---
 
-## 6. Start EMQX
+## secret.yaml
 
-Using Docker:
+Stores sensitive data.
+
+Examples
+
+- Database Password
+- JWT Secret
+- MQTT Credentials
+
+---
+
+## api
+
+Contains
+
+### deployment.yaml
+
+Deploys Backend Application.
+
+### service.yaml
+
+Creates Backend Service.
+
+---
+
+## postgres
+
+Contains PostgreSQL resources.
+
+### deployment.yaml
+
+Deploy PostgreSQL.
+
+### service.yaml
+
+Expose PostgreSQL inside the cluster.
+
+### pvc.yaml
+
+Persistent Volume Claim for database storage.
+
+---
+
+## emqx
+
+Contains EMQX Broker resources.
+
+### deployment.yaml
+
+Deploy MQTT Broker.
+
+### service.yaml
+
+Expose MQTT Broker.
+
+---
+
+## ingress.yaml
+
+Exposes backend using Kubernetes Ingress.
+
+---
+
+# Docker
+
+## Build Image
 
 ```bash
-docker run -d \
---name emqx \
--p 1883:1883 \
--p 8083:8083 \
--p 8084:8084 \
--p 8883:8883 \
--p 18083:18083 \
-emqx/emqx
-```
-
-Dashboard:
-
-```
-http://localhost:18083
-```
-
-Default credentials:
-
-```
-Username: admin
-Password: public
+docker build -t chat-app .
 ```
 
 ---
 
-## 7. Run the Server
+## Run Container
+
+```bash
+docker run -p 8080:8080 chat-app
+```
+
+---
+
+# Docker Compose
+
+Run all services.
+
+```bash
+docker compose up -d
+```
+
+---
+
+# Database Migration
+
+Run migration tool.
+
+Example
+
+```bash
+make migrate-up
+```
+
+Rollback
+
+```bash
+make migrate-down
+```
+
+---
+
+# Run Application
 
 ```bash
 go run main.go
 ```
 
-Server:
+---
+
+# Kubernetes Deployment
+
+Create namespace
+
+```bash
+kubectl apply -f k8s/namespace.yaml
+```
+
+Deploy secrets
+
+```bash
+kubectl apply -f k8s/secret.yaml
+```
+
+Deploy PostgreSQL
+
+```bash
+kubectl apply -f k8s/postgres/
+```
+
+Deploy EMQX
+
+```bash
+kubectl apply -f k8s/emqx/
+```
+
+Deploy Backend
+
+```bash
+kubectl apply -f k8s/api/
+```
+
+Deploy Ingress
+
+```bash
+kubectl apply -f k8s/ingress.yaml
+```
+
+---
+
+# Verify Resources
+
+Pods
+
+```bash
+kubectl get pods -n chat-app
+```
+
+Services
+
+```bash
+kubectl get svc -n chat-app
+```
+
+Ingress
+
+```bash
+kubectl get ingress -n chat-app
+```
+
+---
+
+# CI Pipeline
+
+GitHub Actions automatically performs:
+
+- Checkout Repository
+- Install Go
+- Download Dependencies
+- Verify Dependencies
+- Check Formatting
+- Run Tests
+- Build Project
+
+---
+
+# CD Pipeline
+
+GitHub Actions automatically:
+
+- Checkout Repository
+- Login to Docker Hub
+- Build Docker Image
+- Push Docker Image
+
+Image:
 
 ```
-http://localhost:8080
+zeeshan1678/chat-app:latest
 ```
 
 ---
@@ -207,283 +477,63 @@ http://localhost:8080
 
 ## Authentication
 
-### Register
-
-```
-POST /signup
-```
-
-### Login
-
-```
-POST /login
-```
-
-Returns a JWT token.
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| POST | /signup | Register User |
+| POST | /login | Login |
 
 ---
 
-## Private Messages
+## Users
 
-### Send Message
-
-```
-POST /message
-```
-
-Authentication Required
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| GET | /users | Get Users |
 
 ---
 
-### Get Conversation History
+## Messages
 
-```
-POST /message/history
-```
-
-Authentication Required
-
----
-
-## Groups
-
-### Create Group
-
-```
-POST /group
-```
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| POST | /message | Send Message |
+| POST | /message/history | Get Conversation History |
 
 ---
 
-### Get User Groups
+# Architecture
 
 ```
-GET /group/my-groups
-```
-
----
-
-### Get Group Details
-
-```
-GET /group/:id
+                Client
+                   │
+             HTTP Request
+                   │
+                   ▼
+              Gin Router
+                   │
+                   ▼
+             Authentication
+             (JWT Middleware)
+                   │
+                   ▼
+               Handlers
+                   │
+                   ▼
+               Services
+                   │
+                   ▼
+            Repository Layer
+                   │
+          ┌────────┴─────────┐
+          ▼                  ▼
+     PostgreSQL          MQTT Broker
+        (GORM)             (EMQX)
 ```
 
 ---
 
-### Get Group Members
+# Author
 
-```
-GET /group/:id/members
-```
+**Zeeshan Ahmed**
 
----
-
-### Add Members
-
-```
-POST /group/members
-```
-
----
-
-### Remove Member
-
-```
-POST /group/members/remove
-```
-
----
-
-### Send Group Message
-
-```
-POST /group/message
-```
-
----
-
-### Group Message History
-
-```
-POST /group/message/history
-```
-
----
-
-# MQTT
-
-Broker:
-
-```
-EMQX
-```
-
-The application connects to the MQTT broker on startup.
-
-Messages are published and subscribed through MQTT to support real-time communication.
-
----
-
-# Authentication
-
-Protected routes require:
-
-```
-Authorization: Bearer <JWT_TOKEN>
-```
-
----
-
-# Dependencies
-
-- Gin
-- GORM
-- PostgreSQL Driver
-- Eclipse Paho MQTT
-- JWT
-- godotenv
-- bcrypt
-
----
-
-# Running the Project
-
-```bash
-go mod tidy
-
-go run main.go
-```
-
----
-
-# Future Improvements
-
-- Read Receipts
-- Online/Offline Presence
-- Typing Indicators
-- File Sharing
-- Message Reactions
-- WebSocket Support
-- Push Notifications
-
----
-
-# License
-
-This project is intended for educational and learning purposes.
-
-# Kubernetes Deployment
-
-## Start Minikube
-
-```bash
-minikube start
-```
-
-## Enable Ingress
-
-```bash
-minikube addons enable ingress
-```
-
-## Build Docker Image inside Minikube
-
-```bash
-eval $(minikube docker-env)
-docker build -t backend-app:v1 .
-```
-
-## Deploy Resources
-
-```bash
-kubectl apply -f k8s/
-```
-
-## Verify Namespace
-
-```bash
-kubectl get ns
-```
-
-## Verify Pods
-
-```bash
-kubectl get pods -n chat-app
-```
-
-## Verify Services
-
-```bash
-kubectl get svc -n chat-app
-```
-
-## Verify Deployments
-
-```bash
-kubectl get deployments -n chat-app
-```
-
-## Verify Ingress
-
-```bash
-kubectl get ingress -n chat-app
-```
-
-## View Logs
-
-```bash
-kubectl logs deployment/backend -n chat-app
-```
-
-## Port Forward (Optional)
-
-```bash
-kubectl port-forward service/backend-service 8080:80 -n chat-app
-```
-
-Then open:
-
-```
-http://localhost:8080
-```
-
-## Access Using Ingress
-
-Get Minikube IP:
-
-```bash
-minikube ip
-```
-
-Add to `/etc/hosts`:
-
-```bash
-<MINIKUBE_IP> chatapp.local
-```
-
-Example:
-
-
-.
-```bash
-192.168.49.2 chatapp.local
-```
-
-Open:
-
-```
-http://chatapp.local
-```
-
-## Delete Deployment
-
-```bash
-kubectl delete -f k8s/
-```
-
-## Stop Minikube
-
-```bash
-minikube stop
-```
+Backend Developer | Go | PostgreSQL | Docker | Kubernetes
