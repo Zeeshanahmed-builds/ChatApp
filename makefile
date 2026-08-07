@@ -61,6 +61,7 @@ ingress-enable:
 	minikube addons enable ingress
 
 
-# 	kubectl port-forward -n chat-app svc/postgres 15432:5432
+# kubectl port-forward -n chat-app svc/postgres 15432:5432
 # kubectl get svc -n chat-app
 # kubectl get pods -n chat-app
+# kubectl logs -n chat-app backend-64888fcdb8-zqqmj
