@@ -1,10 +1,10 @@
 package users_service_imp
 
 import (
-	"github.com/Zeeshanahmed-builds/ChatApp/models"
-	"github.com/Zeeshanahmed-builds/ChatApp/utils"
 	"errors"
 	"fmt"
+	"github.com/Zeeshanahmed-builds/ChatApp/models"
+	"github.com/Zeeshanahmed-builds/ChatApp/utils"
 	"log"
 
 	"golang.org/x/crypto/bcrypt"

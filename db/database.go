@@ -2,12 +2,12 @@ package db
 
 import (
 	"fmt"
-	"log"
-	"os"
 	"github.com/Zeeshanahmed-builds/ChatApp/models"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"log"
+	"os"
 )
 
 func Connect() (*gorm.DB, error) {

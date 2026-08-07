@@ -1,9 +1,9 @@
 package users_service_imp
 
 import (
-	"github.com/Zeeshanahmed-builds/ChatApp/models"
 	"errors"
 	"fmt"
+	"github.com/Zeeshanahmed-builds/ChatApp/models"
 )
 
 func (a *AuthUsers_Imp) SignUp(users *models.User) error {

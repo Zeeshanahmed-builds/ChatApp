@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"github.com/Zeeshanahmed-builds/ChatApp/models"
 	"fmt"
+	"github.com/Zeeshanahmed-builds/ChatApp/models"
 	"github.com/gin-gonic/gin"
 )
 

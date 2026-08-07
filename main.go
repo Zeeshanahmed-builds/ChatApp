@@ -1,10 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"github.com/Zeeshanahmed-builds/ChatApp/db"
 	"github.com/Zeeshanahmed-builds/ChatApp/mqtt"
 	"github.com/Zeeshanahmed-builds/ChatApp/routes"
-	"fmt"
 	"log"
 
 	"github.com/gin-gonic/gin"
