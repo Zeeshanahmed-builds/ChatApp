@@ -60,11 +60,9 @@ services:
     networks:
       - chatapp-network
     restart: unless-stopped
-
 networks:
   chatapp-network:
     driver: bridge
-
 volumes:
   postgres-data:
   emqx-data:
