@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"chat-app/utils"
+	"github.com/Zeeshanahmed-builds/ChatApp/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"

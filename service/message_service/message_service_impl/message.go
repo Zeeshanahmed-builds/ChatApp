@@ -1,7 +1,7 @@
 package message_service_imp
 
 import (
-	"chat-app/models"
+	"github.com/Zeeshanahmed-builds/ChatApp/models"
 	"encoding/json"
 	"fmt"
 	"time"

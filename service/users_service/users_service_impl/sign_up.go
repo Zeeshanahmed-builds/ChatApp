@@ -1,7 +1,7 @@
 package users_service_imp
 
 import (
-	"chat-app/models"
+	"github.com/Zeeshanahmed-builds/ChatApp/models"
 	"errors"
 	"fmt"
 )

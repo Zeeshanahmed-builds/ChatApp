@@ -1,7 +1,7 @@
 package users_repo_imp
 
 import (
-	"chat-app/models"
+	"github.com/Zeeshanahmed-builds/ChatApp/models"
 	"golang.org/x/crypto/bcrypt"
 	"log"
 )

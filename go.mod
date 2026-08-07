@@ -1,4 +1,4 @@
-module chat-app
+module  github.com/Zeeshanahmed-builds/ChatApp
 
 go 1.25.1
 

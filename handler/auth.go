@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"chat-app/service/message_service"
-	"chat-app/service/users_service"
+	"github.com/Zeeshanahmed-builds/ChatApp/service/message_service"
+	"github.com/Zeeshanahmed-builds/ChatApp/service/users_service"
 )
 
 type AuthHandler struct {

@@ -1,7 +1,7 @@
 package message_repo_imp
 
 import (
-	"chat-app/repo/message_repo"
+	"github.com/Zeeshanahmed-builds/ChatApp/repo/message_repo"
 	"gorm.io/gorm"
 )
 

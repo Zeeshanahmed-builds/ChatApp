@@ -1,6 +1,6 @@
 package message_repo
 
-import "chat-app/models"
+import "github.com/Zeeshanahmed-builds/ChatApp/models"
 
 type MessageRepo interface {
 	SaveMessage(message *models.Message) error

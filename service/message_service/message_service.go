@@ -1,7 +1,7 @@
 package message_service
 
 import (
-	"chat-app/models"
+	"github.com/Zeeshanahmed-builds/ChatApp/models"
 )
 
 type MessageService interface {

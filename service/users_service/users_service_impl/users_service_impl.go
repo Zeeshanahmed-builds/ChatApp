@@ -1,8 +1,8 @@
 package users_service_imp
 
 import (
-	"chat-app/repo/users_repo"
-	"chat-app/service/users_service"
+	"github.com/Zeeshanahmed-builds/ChatApp/repo/users_repo"
+	"github.com/Zeeshanahmed-builds/ChatApp/service/users_service"
 )
 
 type AuthUsers_Imp struct {

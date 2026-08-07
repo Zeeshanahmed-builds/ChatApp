@@ -1,7 +1,7 @@
 package message_repo_imp
 
 import (
-	"chat-app/models"
+	"github.com/Zeeshanahmed-builds/ChatApp/models"
 )
 
 func (m *MessageRepository) SaveMessage(message *models.Message) error {

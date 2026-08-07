@@ -1,9 +1,9 @@
 package main
 
 import (
-	"chat-app/db"
-	"chat-app/mqtt"
-	"chat-app/routes"
+	"github.com/Zeeshanahmed-builds/ChatApp/db"
+	"github.com/Zeeshanahmed-builds/ChatApp/mqtt"
+	"github.com/Zeeshanahmed-builds/ChatApp/routes"
 	"fmt"
 	"log"
 

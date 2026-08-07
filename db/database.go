@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-
-	"chat-app/models"
-
+	"github.com/Zeeshanahmed-builds/ChatApp/models"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

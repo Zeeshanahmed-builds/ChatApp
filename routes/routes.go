@@ -1,12 +1,12 @@
 package routes
 
 import (
-	"chat-app/handler"
-	"chat-app/middleware"
-	"chat-app/repo/message_repo/message_repo_impl"
-	"chat-app/repo/users_repo/users_repo_imp"
-	"chat-app/service/message_service/message_service_impl"
-	"chat-app/service/users_service/users_service_impl"
+	"github.com/Zeeshanahmed-builds/ChatApp/handler"
+	"github.com/Zeeshanahmed-builds/ChatApp/middleware"
+	"github.com/Zeeshanahmed-builds/ChatApp/repo/message_repo/message_repo_impl"
+	"github.com/Zeeshanahmed-builds/ChatApp/repo/users_repo/users_repo_imp"
+	"github.com/Zeeshanahmed-builds/ChatApp/service/message_service/message_service_impl"
+	"github.com/Zeeshanahmed-builds/ChatApp/service/users_service/users_service_impl"
 	paho "github.com/eclipse/paho.mqtt.golang"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"

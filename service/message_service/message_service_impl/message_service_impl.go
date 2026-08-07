@@ -1,8 +1,8 @@
 package message_service_imp
 
 import (
-	"chat-app/repo/message_repo"
-	"chat-app/service/message_service"
+	"github.com/Zeeshanahmed-builds/ChatApp/repo/message_repo"
+	"github.com/Zeeshanahmed-builds/ChatApp/service/message_service"
 	paho "github.com/eclipse/paho.mqtt.golang"
 )
 
